@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react'
-import { fetchCollection, getApiUrl } from '../api/client'
+import { fetchCollection } from '../api/client'
+
+const teamsApiUrl = import.meta.env.VITE_CODESPACE_NAME
+  ? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/teams/`
+  : 'http://localhost:8000/api/teams/'
 
 function Teams() {
   const [teams, setTeams] = useState([])
@@ -9,7 +13,7 @@ function Teams() {
   useEffect(() => {
     let isMounted = true
 
-    fetchCollection('teams')
+    fetchCollection(teamsApiUrl, 'teams')
       .then((items) => {
         if (isMounted) {
           setTeams(items)
@@ -35,7 +39,7 @@ function Teams() {
           <p className="eyebrow">Teams</p>
           <h2>Training groups</h2>
         </div>
-        <code>{getApiUrl('teams')}</code>
+        <code>{teamsApiUrl}</code>
       </div>
       {status === 'loading' && <p className="text-muted">Loading teams...</p>}
       {status === 'error' && <p className="alert alert-danger">{error}</p>}

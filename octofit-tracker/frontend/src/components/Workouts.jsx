@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react'
-import { fetchCollection, getApiUrl } from '../api/client'
+import { fetchCollection } from '../api/client'
+
+const workoutsApiUrl = import.meta.env.VITE_CODESPACE_NAME
+  ? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/workouts/`
+  : 'http://localhost:8000/api/workouts/'
 
 function Workouts() {
   const [workouts, setWorkouts] = useState([])
@@ -9,7 +13,7 @@ function Workouts() {
   useEffect(() => {
     let isMounted = true
 
-    fetchCollection('workouts')
+    fetchCollection(workoutsApiUrl, 'workouts')
       .then((items) => {
         if (isMounted) {
           setWorkouts(items)
@@ -35,7 +39,7 @@ function Workouts() {
           <p className="eyebrow">Workouts</p>
           <h2>Suggested sessions</h2>
         </div>
-        <code>{getApiUrl('workouts')}</code>
+        <code>{workoutsApiUrl}</code>
       </div>
       {status === 'loading' && <p className="text-muted">Loading workouts...</p>}
       {status === 'error' && <p className="alert alert-danger">{error}</p>}

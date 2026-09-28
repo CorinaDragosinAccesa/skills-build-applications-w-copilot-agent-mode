@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react'
-import { fetchCollection, getApiUrl } from '../api/client'
+import { fetchCollection } from '../api/client'
+
+const leaderboardApiUrl = import.meta.env.VITE_CODESPACE_NAME
+  ? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/leaderboard/`
+  : 'http://localhost:8000/api/leaderboard/'
 
 function Leaderboard() {
   const [entries, setEntries] = useState([])
@@ -9,7 +13,7 @@ function Leaderboard() {
   useEffect(() => {
     let isMounted = true
 
-    fetchCollection('leaderboard')
+    fetchCollection(leaderboardApiUrl, 'leaderboard')
       .then((items) => {
         if (isMounted) {
           setEntries(items)
@@ -35,7 +39,7 @@ function Leaderboard() {
           <p className="eyebrow">Leaderboard</p>
           <h2>Current standings</h2>
         </div>
-        <code>{getApiUrl('leaderboard')}</code>
+        <code>{leaderboardApiUrl}</code>
       </div>
       {status === 'loading' && <p className="text-muted">Loading leaderboard...</p>}
       {status === 'error' && <p className="alert alert-danger">{error}</p>}

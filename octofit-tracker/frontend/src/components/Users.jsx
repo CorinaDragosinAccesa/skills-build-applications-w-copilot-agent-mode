@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react'
-import { fetchCollection, getApiUrl } from '../api/client'
+import { fetchCollection } from '../api/client'
+
+const usersApiUrl = import.meta.env.VITE_CODESPACE_NAME
+  ? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/users/`
+  : 'http://localhost:8000/api/users/'
 
 function Users() {
   const [users, setUsers] = useState([])
@@ -9,7 +13,7 @@ function Users() {
   useEffect(() => {
     let isMounted = true
 
-    fetchCollection('users')
+    fetchCollection(usersApiUrl, 'users')
       .then((items) => {
         if (isMounted) {
           setUsers(items)
@@ -35,7 +39,7 @@ function Users() {
           <p className="eyebrow">Members</p>
           <h2>OctoFit users</h2>
         </div>
-        <code>{getApiUrl('users')}</code>
+        <code>{usersApiUrl}</code>
       </div>
       {status === 'loading' && <p className="text-muted">Loading users...</p>}
       {status === 'error' && <p className="alert alert-danger">{error}</p>}
