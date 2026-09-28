@@ -1,0 +1,33 @@
+:root {
+  font: 16px/145% Avenir Next, Avenir, Verdana, sans-serif;
+  color: #244137;
+  background: #f7faf8;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+}
+
+#root {
+  min-height: 100svh;
+}
+
+h1,
+h2 {
+  font-family: Avenir Next, Avenir, Verdana, sans-serif;
+  font-weight: 500;
+  color: #244137;
+}
+
+code {
+  display: inline-flex;
+  border-radius: 6px;
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.82rem;
+  padding: 4px 8px;
+  background: #eef6f1;
+}
